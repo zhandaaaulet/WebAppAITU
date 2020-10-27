@@ -3,7 +3,7 @@ package domain;
 public class AccessToken {
     private String token;
 
-    public AccessToken(String token) {
+    public AccessToken(String token){
         setToken(token);
     }
 

@@ -1,24 +1,51 @@
 package services;
 
 import domain.AccessToken;
-import domain.SignInData;
 import domain.User;
-import repositories.entities.UserRepository;
+import domain.UserLoginData;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import repositories.UserRepository;
+import repositories.interfaces.IUserRepository;
+import services.interfaces.IAuthorizationService;
 
-public class AuthorizationService {
-    private final UserRepository userRepo = new UserRepository();
+import java.sql.Date;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Random;
 
-    public AccessToken signIn(SignInData data) throws Exception {
-        User authorizeUser = userRepo.getUserByLogin(data);
-        if (authorizeUser == null) {
-            throw new Exception("Authorization failed!");
+public class AuthorizationService implements IAuthorizationService {
+    private final IUserRepository userRepository = new UserRepository();
+
+    @Override
+    public AccessToken authenticateUser(UserLoginData data) throws Exception {
+        User authenticateUser = signIn(data);
+        return new AccessToken((issueToken(authenticateUser)));
+    }
+
+    @Override
+    public User getUserByUsername(String issuer) {
+        return userRepository.getUserByUsername(issuer);
+    }
+
+    private User signIn(UserLoginData data) throws Exception {
+        User user = userRepository.findUserbyLogin(data);
+        if (user == null) {
+            throw new Exception("Authentication failed");
         }
-        AccessToken token = new AccessToken(getToken(authorizeUser));
-        return token;
+        return user;
     }
 
-    private String getToken(User user) {
-        String token = user.getUsername() + ":" + user.getPassword();
-        return token;
+    private String issueToken(User user) {
+        Instant now = Instant.now();
+        String secretWord = "TheStrongestSecretKeyICanThinkOf";
+        return Jwts.builder()
+                .setIssuer(user.getUsername())
+                .setIssuedAt(Date.from(now))
+                .claim("1d20", new Random().nextInt(20) + 1)
+                .setExpiration(Date.from(now.plus(30, ChronoUnit.MINUTES)))
+                .signWith(Keys.hmacShaKeyFor(secretWord.getBytes()))
+                .compact();
     }
+
 }

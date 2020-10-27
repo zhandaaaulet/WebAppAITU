@@ -1,31 +1,44 @@
 package domain;
 
-import java.sql.Date;
-
 public class User {
     private long id;
     private String name;
     private String surname;
     private String username;
     private String password;
-    private Date birthday;
+    private String birthday;
+    private String role;
 
-    public User(long id, String name, String surname, String username, String password, Date birthday) {
-        setId(id);
-        setName(name);
-        setSurname(surname);
-        setUsername(username);
-        setPassword(password);
-        setBirthday(birthday);
+    public User(){
+
     }
 
-    public User(String name, String surname, String username, String password, Date birthday) {
+    public User(String name, String surname, String username, String password, String birthday, String role) {
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.password = password;
+        this.birthday = birthday;
+        this.role = role;
+    }
 
-        setName(name);
-        setSurname(surname);
-        setUsername(username);
-        setPassword(password);
-        setBirthday(birthday);
+    public User(long id, String name, String surname, String username, String password, String birthday, String role) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.password = password;
+        this.birthday = birthday;
+        this.role = role;
+    }
+
+    public User(long id, String name, String surname, String username, String birthday, String role) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.birthday = birthday;
+        this.role = role;
     }
 
     public long getId() {
@@ -68,13 +81,22 @@ public class User {
         this.password = password;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
 
     @Override
     public String toString() {
@@ -84,8 +106,8 @@ public class User {
                 ", surname='" + surname + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", birthday=" + birthday +
+                ", birthday='" + birthday + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }
-

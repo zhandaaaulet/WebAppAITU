@@ -1,32 +1,45 @@
 package domain;
 
-import repositories.interfaces.IProductRepository;
+public class Product {
+    private int product_id;
+    public String name;
+    public String type;
+    public int price;
+    public String company;
 
-public class Product{
-    private long id;
-    private String name;
-    private String type;
-    private String price;
 
-    public Product(long id, String name, String type, String price) {
-        setId(id);
-        setName(name);
-        setType(type);
-        setPrice(price);
+    public Product(){
+
+    }
+    public Product(int product_id, String name, String type, int price, String company) {
+        this.product_id = product_id;
+        this.name = name;
+        this.type = type;
+        this.price = price;
+        this.company = company;
     }
 
-    public Product(String name, String type, String price) {
-        setName(name);
-        setType(type);
-        setPrice(price);
+
+    public String getCompany() {
+        return company;
     }
 
-    public long getId() {
-        return id;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public int getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
+    }
+
+    public Product(String name, String type, int price, String company) {
+        this.name = name;
+        this.type = type;
+        this.price = price;
     }
 
     public String getName() {
@@ -45,11 +58,21 @@ public class Product{
         this.type = type;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", price=" + price +
+                ", company='" + company + '\'' +
+                '}';
     }
 }
