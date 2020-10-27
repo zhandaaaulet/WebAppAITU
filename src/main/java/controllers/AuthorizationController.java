@@ -14,7 +14,7 @@ import javax.ws.rs.core.Response;
 @Path("auth")
 public class AuthorizationController {
     private final IAuthorizationService authService = new AuthorizationService();
-
+//fgvhbj
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
